@@ -1,0 +1,25 @@
+{
+  "name": "hotlink",
+  "version": "0.0.1",
+  "description": "Hotlink statically prevents 404s and other path generation mistakes, all at compile time",
+  "main": "index.js",
+  "files": ["lib/**/*"],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garybernhardt/hotlink.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/garybernhardt/hotlink/issues"
+  },
+  "homepage": "https://github.com/garybernhardt/hotlink#readme",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}
