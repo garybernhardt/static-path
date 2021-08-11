@@ -2,23 +2,26 @@
   "name": "hotlink",
   "version": "0.0.1",
   "description": "Hotlink statically prevents 404s and other path generation mistakes, all at compile time",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
   "scripts": {
     "test": "ava",
-    "build": "npm-run-all test format compile lint",
+    "build": "npm-run-all format compile test lint",
     "compile": "tsc",
     "format": "prettier --write 'src/**/*.ts'",
-    "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint --max-warnings 0 --ext '.js,.jsx,.ts,.tsx' src",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/garybernhardt/hotlink.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["path", "url", "link", "404", "pattern", "routing", "router"],
+  "author": "Gary Bernhardt",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/garybernhardt/hotlink/issues"
