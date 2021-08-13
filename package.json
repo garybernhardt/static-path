@@ -1,7 +1,7 @@
 {
-  "name": "hotlink",
+  "name": "static-path",
   "version": "0.0.1",
-  "description": "Hotlink statically prevents 404s and other path generation mistakes, all at compile time",
+  "description": "Static-path uses TypeScript to prevent 404s and other path generation mistakes at compile time",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -18,15 +18,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/garybernhardt/hotlink.git"
+    "url": "git+https://github.com/garybernhardt/static-path.git"
   },
-  "keywords": ["path", "url", "link", "404", "pattern", "routing", "router"],
+  "keywords": [
+    "path",
+    "url",
+    "link",
+    "404",
+    "pattern",
+    "routing",
+    "router"
+  ],
   "author": "Gary Bernhardt",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/garybernhardt/hotlink/issues"
+    "url": "https://github.com/garybernhardt/static-path/issues"
   },
-  "homepage": "https://github.com/garybernhardt/hotlink#readme",
+  "homepage": "https://github.com/garybernhardt/static-path#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
