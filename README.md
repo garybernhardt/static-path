@@ -211,13 +211,13 @@ But we also want to allow calls without any `courseId`, in which case we'll use 
 
 ```typescript
 // The function generates concrete path strings, just like static-paths do.
-export function lessonWithDefault(params:
-  | {courseId: string, lessonId: string}
-  | {lessonId: string}
-) {
+export function lessonWithDefault(params: {
+  lessonId: string,
+  courseId?: string
+}) {
   /* If we don't provide a course ID, assume that we're linking to the
    * TypeScript course. */
-  const courseId = 'courseId' in params ? params.courseId : 'typescript'
+  const courseId = params.courseId ?? 'typescript'
 
   return `/courses/${courseId}/lessons/${params.lessonId}`
 }
@@ -225,7 +225,6 @@ export function lessonWithDefault(params:
 /* It's up to us to make the `pattern` property match what the function
  * generates. */
 lessonWithDefault.pattern = '/courses/:courseId/lessons/:lessonId'
-
 ```
 
 Note that the `lessonWithDefault` path function doesn't use static-path at all.
