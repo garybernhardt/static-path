@@ -76,11 +76,11 @@ const course = path('/courses/:courseId')
 const lesson = course.path('/lessons/:lessonId')
 
 // This returns '/courses/typescript/lessons/type-predicates'.
-course({courseId: 'typescript', lessonId: 'type-predicates'})
+lesson({courseId: 'typescript', lessonId: 'type-predicates'})
 
 // Both of these are type errors.
-course({courseId: 'typescript'})
-course({lessonId: 'type-predicates'})
+lesson({courseId: 'typescript'})
+lesson({lessonId: 'type-predicates'})
 ```
 
 Static-path only supports params like `':courseId'`.
