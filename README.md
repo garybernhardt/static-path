@@ -10,7 +10,7 @@ Here's an example with React Router, but the same idea applies to most routers.
 Then other parts of the application link to that route:
 
 ```typescript
-<a href={`/lessons/{lessonId}`} />
+<a href={`/lessons/${lessonId}`} />
 ```
 
 The links and the routes don't know about each other.
