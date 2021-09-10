@@ -182,7 +182,7 @@ We recommend porting to TypeScript first.
 
 ### How does it work?
 
-It all hinges on a type that combines [template literal types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) with a [conditional type](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html) to extra the param names from the route pattern string.
+It all hinges on a type that combines [template literal types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) with a [conditional type](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html) to extract the param names from the route pattern string.
 Prior to TypeScript adding template literal type support, this wasn't possible without code generation.
 
 ### Doesn't this make the code verbose?
