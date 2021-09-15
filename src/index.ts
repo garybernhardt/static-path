@@ -56,7 +56,7 @@ export function path<Pattern extends string>(pattern: Pattern): Path<Pattern> {
       parts
         .map((part) => {
           if (part.kind === 'param') {
-            return paramValue(params, part.paramName);
+            return escapeParamValue(paramValue(params, part.paramName));
           } else {
             return part.value;
           }
@@ -109,6 +109,10 @@ function normalizePattern(pattern: string) {
        * slash, because we don't want to turn '/' into just ''. */
       .replace(/^(.+)\/$/, (match, patternWithoutTrailingSlash) => patternWithoutTrailingSlash)
   );
+}
+
+function escapeParamValue(value: string) {
+  return encodeURIComponent(value);
 }
 
 function paramValue<Pattern extends string>(params: Params<Pattern>, paramName: keyof Params<Pattern>): string {
