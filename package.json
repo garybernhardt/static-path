@@ -1,6 +1,6 @@
 {
   "name": "static-path",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Static-path uses TypeScript to prevent 404s and other path generation mistakes at compile time",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
