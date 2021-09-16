@@ -44,6 +44,10 @@ test('discards trailing slashes in paths', (t) => {
   t.is(p2({}), '/courses/lessons');
 });
 
+test('escapes params when generating paths', (t) => {
+  t.is(path('/courses/:courseId')({courseId: 'the/course'}), '/courses/the%2Fcourse');
+});
+
 test('joins subpaths, whether they have a leading slash or not', (t) => {
   // With leading slash on subpath:
   const p1 = path('/courses/:courseId').path('/lessons/:lessonId');
