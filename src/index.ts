@@ -36,7 +36,7 @@ type Part<Pattern extends string> =
  * types, we can use helper types to create them from the pattern type. */
 export type Path<Pattern extends string> = {
   (params: Params<Pattern>): string;
-  pattern: string;
+  pattern: NormalizePattern<Pattern>;
   parts: Part<Pattern>[];
 
   path: <Subpattern extends string>(subpattern: Subpattern) => Path<`${Pattern}/${Subpattern}`>;
@@ -98,16 +98,44 @@ function patternParts<Pattern extends string>(pattern: Pattern): Part<Pattern>[]
   });
 }
 
+/* This type needs to exactly match the `normalizePattern` function's behavior.
+ *
+ * The cases here are marked, and exactly match the cases in
+ * `normalizePattern`.
+ */
+// prettier-ignore
+export type NormalizePattern<Pattern extends string> =
+  // Case 1: we're looking at the root path, '/'. We don't want to change it.
+  '/' extends Pattern ? '/'
+
+  // Case 2: Replace repeated slashes with one slash.
+  : Pattern extends `${infer Prefix}//${infer Suffix}` ? NormalizePattern<`${Prefix}/${Suffix}`>
+
+  // Case 3: Remove trailing slashes.
+  : Pattern extends `${infer Prefix}/` ? NormalizePattern<Prefix>
+  : Pattern;
+
 /* Normalize patterns. E.g., '/courses//:courseId/' becomes
- * '/courses/:courseId'. */
-function normalizePattern(pattern: string) {
+ * '/courses/:courseId'
+ *
+ * This function needs to exactly match what the `NormalizePattern` type does.
+ * The type system can't see what we're doing here, so we have to verify the
+ * match manually. */
+function normalizePattern<Pattern extends string>(pattern: Pattern): NormalizePattern<Pattern> {
+  // Case 1: we're looking at the root path, '/'. We don't want to change it.
+  if (pattern === '/') {
+    return pattern as NormalizePattern<Pattern>;
+  }
+
   return (
     pattern
-      // Replace repeated slashes with one slash
+      // Case 2: Replace repeated slashes with one slash.
       .replace(/\/+/g, '/')
-      /* Remove trailing slashes. But only if there's something before the trailing
-       * slash, because we don't want to turn '/' into just ''. */
-      .replace(/^(.+)\/$/, (match, patternWithoutTrailingSlash) => patternWithoutTrailingSlash)
+      // Case 3: Remove trailing slashes.
+      .replace(
+        /^(.+)\/$/,
+        (match, patternWithoutTrailingSlash) => patternWithoutTrailingSlash,
+      ) as NormalizePattern<Pattern>
   );
 }
 

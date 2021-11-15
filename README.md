@@ -135,6 +135,27 @@ export function LinkToALesson() {
 }
 ```
 
+## Integrating with Express and other server-side routers
+
+Recent versions of [@types/express](https://www.npmjs.com/package/@types/express) can statically determine route parameter names from the route pattern.
+That feature integrates cleanly with static-path.
+
+The code below type checks.
+The `req.params.courseId` property access is allowed because the static-path contains a `:courseId` parameter, and the type information flows from there into the Express `app.get` call.
+If we try to access `req.params.someOtherParam`, it will type error.
+
+```typescript
+const course = path('/courses/:courseId');
+
+app.get(course.pattern, (req, res) => {
+  console.log(req.params.courseId;
+  res.end();
+});
+```
+
+Other Express-style routers should work in the same way.
+If not, those projects need to add param name extraction types similar to those in Express.
+
 ## Recommended usage
 
 1. Create a `paths.ts` module to hold your paths.

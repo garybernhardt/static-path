@@ -30,6 +30,13 @@ test('replaces repeated slashes with one slash', (t) => {
   const p = path('/one//two');
   t.is(p({}), '/one/two');
   t.is(p.pattern, '/one/two');
+
+  /* Normalization of repeated slashes is also reflected at the type level. */
+  const testString1: typeof p.pattern = '/one/two';
+  testString1;
+  // @ts-expect-error
+  const testString2: typeof p.pattern = '/one//two';
+  testString2;
 });
 
 test('discards trailing slashes in paths', (t) => {
@@ -42,6 +49,32 @@ test('discards trailing slashes in paths', (t) => {
   const p2 = path('/courses/').path('/lessons/');
   t.is(p2.pattern, '/courses/lessons');
   t.is(p2({}), '/courses/lessons');
+
+  /* Normalization of trailing slashes is also reflected at the type level. */
+  const testString1: typeof p2.pattern = '/courses/lessons';
+  testString1;
+  // @ts-expect-error
+  const testString2: typeof p2.pattern = '/courses/lessons/';
+  testString2;
+});
+
+test("doesn't try to normalize the root path", (t) => {
+  /* Normalization of the root path '/' is a tricky case, so we check it
+   * explicitly. */
+  const root = path('/');
+  t.is(root.pattern, '/');
+  const testString1: typeof root.pattern = '/';
+  testString1;
+  // @ts-expect-error
+  const testString2: typeof root.pattern = '';
+  testString2;
+});
+
+test("normalizes the weird path '//'", (t) => {
+  const doubleSlash = path('//');
+  t.is(doubleSlash.pattern, '/');
+  const testString1: typeof doubleSlash.pattern = '/';
+  testString1;
 });
 
 test('joins subpaths, whether they have a leading slash or not', (t) => {
